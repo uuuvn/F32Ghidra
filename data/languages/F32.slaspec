@@ -1,0 +1,5 @@
+define endian=little;
+define alignment=4;
+
+@include "F32spaces.sinc"
+@include "F32instructions.sinc"

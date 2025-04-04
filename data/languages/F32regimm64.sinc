@@ -1,0 +1,35 @@
+:addd Rd_REG64, Rs_REG64, Imm is a=0x11 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 + Imm;
+}
+
+:subd Rd_REG64, Rs_REG64, Imm is a=0x12 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 - Imm;
+}
+
+:lsld Rd_REG64, Rs_REG64, Imm is a=0x14 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 << Imm;
+}
+
+:lsrd Rd_REG64, Rs_REG64, Imm is a=0x15 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 >> Imm;
+}
+
+:lsrad Rd_REG64, Rs_REG64, ImmShrD, ImmAndD is a=0x16 & b=0 & Rd_REG64 & Rs_REG64 & ImmShrD & ImmAndD {
+    Rd_REG64 = (Rs_REG64 >> ImmShrD) & ImmAndD;
+}
+
+:andd Rd_REG64, Rs_REG64, Imm is a=0x19 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 & Imm;
+}
+
+:ordd Rd_REG64, Rs_REG64, Imm is a=0x1a & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 | Imm;
+}
+
+:xordd Rd_REG64, Rs_REG64, Imm is a=0x1b & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = Rs_REG64 ^ Imm;
+}
+
+:seteqd Rd_REG64, Rs_REG64, Imm is a=0x1c & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64 == Imm);
+}

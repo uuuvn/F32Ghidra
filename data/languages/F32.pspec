@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<processor_spec>
+	<programcounter register="pc"/>
+	<default_symbols>
+    	<symbol name="_start" address="ucode:0x0" entry="true"/>
+  	</default_symbols>
+  	<volatile outputop="special_register_write" inputop="special_register_read">
+    	<range space="ram" first="0x0" last="0xFFFFFFFFFFFFFFFF"/>
+    	<range space="reg" first="0x0" last="0xFFFFFFFFFFFFFFFF"/>
+    	<range space="unk" first="0x0" last="0xFFFFFFFFFFFFFFFF"/>
+    	<range space="register" first="0x4000" last="0x400F"/>
+  	</volatile>
+</processor_spec>

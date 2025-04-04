@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- See Relax specification: Ghidra/Framework/SoftwareModeling/data/languages/language_definitions.rxg -->
+<language_definitions>
+   <language processor="F32"
+            endian="little"
+            size="64"
+            variant="default"
+            version="1.0"
+            slafile="F32.sla"
+            processorspec="F32.pspec"
+            id="F32:LE:64:default">
+    <description>AMD F32</description>
+    <compiler name="default" spec="F32.cspec" id="default"/>
+  </language> 
+</language_definitions>

@@ -1,0 +1,79 @@
+# firmware itself
+define space header    type=ram_space       size=8;
+define space ucode     type=ram_space       size=8 default; # control flow breaks if i set ram as default space
+define space jumptable type=ram_space       size=8;
+
+# variable memory
+define space ram       type=ram_space       size=8;
+define space reg       type=ram_space       size=8;
+define space mem       type=ram_space       size=8;
+define space unk       type=ram_space       size=8;
+
+# helper spaces
+define space register  type=register_space  size=8;
+
+define register offset=0x0000 size=8 [ pc sp ctr ];
+# NOTE: r0 is always zero, r1 pops dword from command buffer, r2 contains current pm4 header, other than being used by btab seems to not be special?
+define register offset=0x4000 size=8 [ r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 ];
+
+define token instr(32)
+    a = (26, 31)
+    b = (16, 17)
+    new_b = (14, 17)
+    c = (0, 13)
+    rs = (22, 25)
+    immrs = (22, 25)
+    rd = (18, 21)
+    rx = (14, 17)
+    imm16 = (0, 15)
+    immshr = (0, 4)
+    immshrd = (0, 5)
+    immand = (5, 15)
+    immandd = (6, 15)
+    simm16 = (0, 15) signed
+;
+
+attach variables [ rd rs rx ] [ r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 ];
+
+
+define pcodeop cbuf_pop_dword;
+
+Rd_REG64: rd is rd { export rd; }
+Rd_REG64: r0 is rd=0 & r0 { tmp:8 = 0; export tmp; }
+Rd_REG64: r1 is rd=1 & r1 {
+    tmp:4 = cbuf_pop_dword();
+    tmpex:8 = zext(tmp);
+    export tmpex;
+}
+
+Rs_REG64: rs is rs { export rs; }
+Rs_REG64: r0 is rs=0 & r0 { tmp:8 = 0; export tmp; }
+Rs_REG64: r1 is rs=1 & r1 {
+    tmp:4 = cbuf_pop_dword();
+    tmpex:8 = zext(tmp);
+    export tmpex;
+}
+
+Rx_REG64: rx is rx { export rx; }
+Rx_REG64: r0 is rx=0 & r0 { tmp:8 = 0; export tmp; }
+Rx_REG64: r1 is rx=1 & r1 {
+    tmp:4 = cbuf_pop_dword();
+    tmpex:8 = zext(tmp);
+    export tmpex;
+}
+
+Imm: "#"^x is imm16 [ x = imm16*1; ] { export *[const]:8 x; }
+ImmVar1: "#"^x is imm16 [ x = imm16 | 0xFFFF0000; ] { export *[const]:8 x; }
+ImmVar2: "#"^x is imm16 [ x = imm16 << 16; ] { export *[const]:8 x; }
+ImmVar3: "#"^x is imm16 [ x = (imm16 << 16) | 0xFFFF; ] { export *[const]:8 x; }
+ImmShr: "#"^x is immshr [ x = immshr*1; ] { export *[const]:8 x; }
+ImmAnd: "#"^x is immand [ x = immand*1; ] { export *[const]:8 x; }
+ImmShrD: "#"^x is immshrd [ x = immshrd*1; ] { export *[const]:8 x; }
+ImmAndD: "#"^x is immandd [ x = immandd*1; ] { export *[const]:8 x; }
+ImmRs: "#"^x is immrs [ x = immrs*1; ] { export *[const]:8 x; }
+SImm: "#"^x is simm16 [ x = simm16*1; ] { export *[const]:8 x; }
+
+AddrLoc: x is imm16 [ x = 4*imm16; ] { export *[const]:8 x; }
+Addr: AddrLoc is AddrLoc { export *:8 AddrLoc; }
+RelAddrLoc: x is simm16 [ x = inst_start + (4*simm16); ] { export *[const]:8 x; }
+RelAddr: RelAddrLoc is RelAddrLoc { export *:8 RelAddrLoc; }

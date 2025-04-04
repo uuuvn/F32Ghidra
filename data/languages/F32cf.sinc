@@ -1,0 +1,37 @@
+:b Addr is a=0x20 & b=0x0 & rs=0x0 & rd=0x0 & Addr {
+    goto Addr;
+}
+
+:bx Rs_REG64 is a=0x21 & b=0x0 & rd=0x0 & imm16=0x0 & Rs_REG64 {
+    pc = Rs_REG64;
+    goto [pc];
+}
+
+define pcodeop btab;
+
+:btab is a=0x22 & b=0x0 & rs=0x0 & rd=0x0 & imm16=0x0 {
+    # https://github.com/NationalSecurityAgency/ghidra/issues/237 maybe there is a better way to do this that would confuse decompiler less?
+    pc = btab(r2:4);
+    goto [pc];
+}
+
+:bl Addr is a=0x23 & b=0x0 & rs=0x0 & rd=0x0 & Addr {
+    sp = sp - 8;
+    tmp:8 = inst_next;
+    *[ram]sp = tmp;
+    call Addr;
+}
+
+:ret is a=0x24 & b=0x0 & rs=0x0 & rd=0x0 & imm16=0x0 {
+    tmp:8 = *[ram]sp;
+    sp = sp - 8;
+    return [tmp];
+}
+
+:cbz Rs_REG64 #RelAddr is a=0x25 & b=0x0 & rd=0x0 & Rs_REG64 & RelAddr {
+    if (Rs_REG64 == 0) goto RelAddr;
+}
+
+:cbnz Rs_REG64 #RelAddr is a=0x26 & b=0x0 & rd=0x0 & Rs_REG64 & RelAddr {
+    if (Rs_REG64 != 0) goto RelAddr;
+}

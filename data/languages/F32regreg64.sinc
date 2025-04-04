@@ -1,0 +1,38 @@
+with : a=0x1f {
+    :addd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x11 & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 + Rd_REG64;
+    }
+    :movd Rx_REG64, Rs_REG64 is c=0x11 & Rx_REG64 & Rs_REG64 & rd=0 {
+        Rx_REG64 = Rs_REG64;
+    }
+    :subd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x12 & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 - Rd_REG64;
+    }
+    :lsld Rx_REG64, Rs_REG64, Rd_REG64 is c=0x14 & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 << Rd_REG64;
+    }
+    :lsrd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x15 & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 >> Rd_REG64;
+    }
+    :andd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x19 & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 & Rd_REG64;
+    }
+    :orrd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x1A & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 | Rd_REG64;
+    }
+    :xord Rx_REG64, Rs_REG64, Rd_REG64 is c=0x1B & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = Rs_REG64 ^ Rd_REG64;
+    }
+    :seteqd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x1C & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = zext(Rs_REG64 == Rd_REG64);
+    }
+    :setned Rx_REG64, Rs_REG64, Rd_REG64 is c=0x1D & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = zext(Rs_REG64 != Rd_REG64);
+    }
+    :setgtd Rx_REG64, Rs_REG64, Rd_REG64 is c=0x1E & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = zext(Rs_REG64 > Rd_REG64);
+    }
+    :setged Rx_REG64, Rs_REG64, Rd_REG64 is c=0x1F & Rx_REG64 & Rs_REG64 & Rd_REG64 {
+        Rx_REG64 = zext(Rs_REG64 >= Rd_REG64);
+    }
+}

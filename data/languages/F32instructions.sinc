@@ -1,0 +1,32 @@
+:nop is a=0x0 & b=0x0 & c=0x0 & rs=0x0 & rd=0x0 & rx=0x0 & imm16=0x0 {}
+
+@include "F32regimm32.sinc" # a=0x1 => a=c
+@include "F32regimm64.sinc" # a=0x11 => a=0x1c
+@include "F32regreg32.sinc" # a=0x1f | c=0x1 => c=0xb
+@include "F32regreg64.sinc" # a=0x1f | c=0x11 => c=0x1b
+@include "F32cf.sinc"       # a=0x20 => a=0x26
+@include "F32loadstore.sinc"# a=0x30 => a=0x35
+
+# a=0x37 | b=0x0 => b=0x3
+
+:pop Rd_REG64 is a=0x37 & new_b=0x0 & rs=0x0 & Rd_REG64 {
+    temp:8 = *[ram]sp;
+    sp = sp + 8;
+    Rd_REG64 = temp;
+}
+
+:push Rs_REG64 is a=0x37 & new_b=0x1 & rd=0x0 & Rs_REG64 {
+    temp:8 = Rs_REG64;
+    sp = sp - 8;
+    *[ram]sp = temp;
+}
+
+:mov Rd_REG64, "ctr" is a=0x37 & new_b=0x2 & rs=0x0 & Rd_REG64 {
+    Rd_REG64 = ctr;
+}
+
+:mov "ctr", Rs_REG64 is a=0x37 & new_b=0x3 & rd=0x0 & Rs_REG64 {
+    ctr = Rs_REG64;
+}
+
+:unknown a b c rs rd rx imm16 is a & b & c & rs & rd & rx & imm16 unimpl

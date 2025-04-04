@@ -1,0 +1,35 @@
+:add Rd_REG64, Rs_REG64, Imm is a=0x1 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 + Imm:4);
+}
+
+:sub Rd_REG64, Rs_REG64, Imm is a=0x2 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 - Imm:4);
+}
+
+:lsl Rd_REG64, Rs_REG64, Imm is a=0x4 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 << Imm:4);
+}
+
+:lsr Rd_REG64, Rs_REG64, Imm is a=0x5 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 >> Imm:4);
+}
+
+:lsra Rd_REG64, Rs_REG64, ImmShr, ImmAnd is a=0x6 & b=0 & Rd_REG64 & Rs_REG64 & ImmShr & ImmAnd {
+    Rd_REG64 = zext((Rs_REG64:4 >> ImmShr:4) & ImmAnd:4);
+}
+
+:and Rd_REG64, Rs_REG64, Imm is a=0x9 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 & Imm:4);
+}
+
+:or Rd_REG64, Rs_REG64, Imm is a=0xa & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 | Imm:4);
+}
+
+:xor Rd_REG64, Rs_REG64, Imm is a=0xb & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 ^ Imm:4);
+}
+
+:seteq Rd_REG64, Rs_REG64, Imm is a=0xc & b=0 & Rd_REG64 & Rs_REG64 & Imm {
+    Rd_REG64 = zext(Rs_REG64:4 == Imm:4);
+}
