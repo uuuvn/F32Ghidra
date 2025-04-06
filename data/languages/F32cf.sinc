@@ -7,8 +7,6 @@
     goto [pc];
 }
 
-define pcodeop btab;
-
 :btab is a=0x22 & b=0x0 & rs=0x0 & rd=0x0 & imm16=0x0 {
     # https://github.com/NationalSecurityAgency/ghidra/issues/237 maybe there is a better way to do this that would confuse decompiler less?
     pc = btab(r2:4);
@@ -16,15 +14,13 @@ define pcodeop btab;
 }
 
 :bl Addr is a=0x23 & b=0x0 & rs=0x0 & rd=0x0 & Addr {
-    sp = sp - 8;
     tmp:8 = inst_next;
-    *[ram]sp = tmp;
+    push_stack(tmp);
     call Addr;
 }
 
 :ret is a=0x24 & b=0x0 & rs=0x0 & rd=0x0 & imm16=0x0 {
-    tmp:8 = *[ram]sp;
-    sp = sp - 8;
+    tmp:8 = pop_stack();
     return [tmp];
 }
 

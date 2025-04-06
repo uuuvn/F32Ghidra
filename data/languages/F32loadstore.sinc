@@ -87,11 +87,6 @@ with : a=0x34 {
     }
 }
 
-define pcodeop memset_ram;
-define pcodeop memset_reg;
-define pcodeop memset_mem;
-define pcodeop memset_unk;
-
 with : a=0x35 {
     :stm Rs_REG64, "ram["^Rd_REG64, Imm^"]" is b=0x0 & Rs_REG64 & Rd_REG64 & Imm {
         i:8 = 0;

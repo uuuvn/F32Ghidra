@@ -35,8 +35,10 @@ define token instr(32)
 
 attach variables [ rd rs rx ] [ r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 ];
 
-
+define pcodeop push_stack;
+define pcodeop pop_stack;
 define pcodeop cbuf_pop_dword;
+define pcodeop btab;
 
 Rd_REG64: rd is rd { export rd; }
 Rd_REG64: r0 is rd=0 & r0 { tmp:8 = 0; export tmp; }
