@@ -18,6 +18,14 @@
     Rd_REG64 = zext((Rs_REG64:4 >> ImmShr:4) & ImmAnd:4);
 }
 
+:and Rd_REG64, Rs_REG64, ImmShs is a=0x7 & b=0 & Rd_REG64 & Rs_REG64 & ImmShs {
+    Rd_REG64 = zext(Rs_REG64:4 & ImmShs:4);
+}
+
+:and Rd_REG64, Rs_REG64, ImmShi is a=0x8 & b=0 & Rd_REG64 & Rs_REG64 & ImmShi {
+    Rd_REG64 = zext(Rs_REG64:4 & ImmShi:4);
+}
+
 :and Rd_REG64, Rs_REG64, Imm is a=0x9 & b=0 & Rd_REG64 & Rs_REG64 & Imm {
     Rd_REG64 = zext(Rs_REG64:4 & Imm:4);
 }

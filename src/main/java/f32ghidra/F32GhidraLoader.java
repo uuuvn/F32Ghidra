@@ -35,10 +35,9 @@ import ghidra.util.exception.CancelledException;
 import ghidra.util.task.TaskMonitor;
 
 public class F32GhidraLoader extends AbstractProgramWrapperLoader {
-
 	@Override
 	public String getName() {
-    return "AMD F32 Loader (new)";
+    return "AMD F32 Loader";
 	}
 
 	@Override
